@@ -63,7 +63,6 @@ class DioClient {
     bool includeHeader = false,
   }) async {
     Response? response;
-
     try {
         response = await dio.get(
           url,
