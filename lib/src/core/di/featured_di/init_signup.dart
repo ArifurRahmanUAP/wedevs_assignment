@@ -4,13 +4,13 @@
 // ignore_for_file: unused_import
 
 import 'package:get/get.dart';
-import 'package:wedevs_assignment/src/features/signup_screens/data/repositories/signup_repositories_impl.dart';
-import 'package:wedevs_assignment/src/features/signup_screens/data/source/user_signup_data_source.dart';
-import 'package:wedevs_assignment/src/features/signup_screens/domain/repositories/signup_repositories.dart';
-import 'package:wedevs_assignment/src/features/signup_screens/domain/usecase/user_signup_usecase.dart';
-import 'package:wedevs_assignment/src/features/signup_screens/ui/controller/signup_screen_controller.dart';
+import 'package:wedevs_assignment/src/features/signup_screen/data/repositories/signup_repositories_impl.dart';
+import 'package:wedevs_assignment/src/features/signup_screen/data/source/user_signup_data_source.dart';
+import 'package:wedevs_assignment/src/features/signup_screen/domain/repositories/signup_repositories.dart';
+import 'package:wedevs_assignment/src/features/signup_screen/domain/usecase/user_signup_usecase.dart';
+import 'package:wedevs_assignment/src/features/signup_screen/ui/controller/signup_screen_controller.dart';
 
-import '../../../features/login_screens/data/repositories/login_repository_impl.dart';
+import '../../../features/login_screen/data/repositories/login_repository_impl.dart';
 import '../app_component.dart';
 
 Future<void> initSignup()  async {

@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 import 'dart:io';
 
-import 'package:wedevs_assignment/src/features/login_screens/data/model/login_response_model.dart';
+import 'package:wedevs_assignment/src/features/login_screen/data/model/login_response_model.dart';
 import 'package:intl/intl.dart';
 import '../source/pref_manager.dart';
 import '../utilities/constants.dart';
