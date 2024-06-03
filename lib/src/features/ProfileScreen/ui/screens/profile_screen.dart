@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wedevs_assignment/src/core/extensions.dart';
 import 'package:wedevs_assignment/src/core/utilities/assets_path.dart';
 
+import '../../../../core/common_method/common_method.dart';
 import '../../../../core/di/app_component.dart';
 import '../controller/profile_screen_controller.dart';
 
@@ -215,59 +216,11 @@ class ProfileScreen extends StatelessWidget {
                   profileScreenController.zipCodeController.value),
         ),
         30.ph,
-        Row(
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  side: const BorderSide(
-                    color: Color(0xffbababa)
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 15,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(8), // Set the border radius here
-                  ),
-                ),
-                child: const Text(
-                  "Cancel",
-                  style: TextStyle(
-                    color: Color(0xff607374),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ),
-            20.pw,
-            Expanded(
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xff1ABC9C),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 15,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(8), // Set the border radius here
-                  ),
-                ),
-                child: const Text(
-                  "Save",
-                  style: TextStyle(
-                    color: Color(0xffffffff),
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ),
-          ],
+        CommonMethods.saveCancelButtons(
+          leftButtonTitle: "Cancel",
+          rightButtonTitle: "Save",
+          leftButtonCallBack: () {},
+          rightButtonCallBack: () {},
         ),
         30.ph,
       ],

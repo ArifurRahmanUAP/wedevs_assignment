@@ -5,7 +5,10 @@ import 'package:get/get.dart';
 import 'package:wedevs_assignment/src/features/home_screen/data/model/product_list_model.dart';
 
 class HomeScreenController extends GetxController {
-  var products = <ProductModel>[].obs;
+  final products = <ProductModel>[].obs;
+  final radioValue = "Newest".obs;
+
+
 
   Future<void> readData() async {
     String jsonString = await rootBundle.loadString('assets/response.json');
