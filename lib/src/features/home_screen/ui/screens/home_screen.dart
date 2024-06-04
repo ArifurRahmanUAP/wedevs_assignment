@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
         }, builder: (logic) {
           return Container(
             margin: const EdgeInsets.symmetric(
-              horizontal: 20,
+              horizontal: 15,
             ),
             child: Column(
               children: [
@@ -304,28 +304,131 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget productList({required BuildContext context}) {
-    return Container(
-      height: 500,
-      child: Obx(() {
-        return GridView.count(
+    return Obx(() {
+      return Expanded(
+        child: GridView.count(
+          shrinkWrap: true,
+          // physics: NeverScrollableScrollPhysics(),
+          scrollDirection: Axis.vertical,
           // Create a grid with 2 columns. If you change the scrollDirection to
           // horizontal, this produces 2 rows.
           crossAxisCount: 2,
+          crossAxisSpacing: 2,
+          childAspectRatio: MediaQuery.of(context).size.width /
+              (MediaQuery.of(context).size.height / 1.6),
+          mainAxisSpacing: 2,
+
           // Generate 100 widgets that display their index in the List.
           children: List.generate(homePageController.products.length, (index) {
-            return Center(
+            return Card(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.network(
-                    homePageController.products[index].images![0].src!
-                        .replaceAll("\\", ""),
-                  )
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                    // Adjust the radius as needed
+                    child: Image.network(
+                      width: MediaQuery.of(context).size.width,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                      homePageController.products[index].images![0].src!
+                          .replaceAll("\\", ""),
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(AssetsPath.NO_IMAGE_FOUND_ICON);
+                      },
+                    ),
+                  ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        homePageController.products[index].name!,
+                        maxLines: 2,
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                              "\$${homePageController.products[index].regularPrice!}",
+                              style:
+                              homePageController.products[index].salePrice != ""
+                                  ? const TextStyle(
+                                decoration: TextDecoration.lineThrough,
+                                color: Color(0xff989FA8),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              )
+                                  : const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                              )),
+                          8.pw,
+                          homePageController.products[index].salePrice != ""
+                              ? Text(
+                            "\$${homePageController.products[index].salePrice}",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          )
+                              : Container(),
+                        ],
+                      ),
+                      const Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            color: Color(0xffFF708A),
+                            size: 15,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Color(0xffFF708A),
+                            size: 15,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Color(0xffFF708A),
+                            size: 15,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Color(0xffFF708A),
+                            size: 15,
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: Color(0xffFF708A),
+                            size: 15,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                )
                 ],
               ),
             );
           }),
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 }

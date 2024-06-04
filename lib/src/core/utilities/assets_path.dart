@@ -12,5 +12,6 @@ class AssetsPath {
   static const String PASSWORD_ICON = "assets/password_icon.svg";
   static const String NOTIFICATION_ICON = "assets/notification_icon.svg";
   static const String WISHLIST_ICON = "assets/wishlist_icon.svg";
+  static const String NO_IMAGE_FOUND_ICON = "assets/image_not_found.jpg";
 
 }
