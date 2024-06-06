@@ -12,16 +12,15 @@ class ProfileScreenController extends GetxController {
   final GetProfileDataUseCase getProfileDataUseCase;
   final UpdateProfileDataUseCase updateProfileDataUseCase;
 
-  final isProfileLoading = false.obs;
-  final isProfileUpdateLoading = false.obs;
-
   ProfileScreenController({
     required this.getProfileDataUseCase,
     required this.updateProfileDataUseCase,
   });
 
-  final profileModel = ProfileModel().obs;
+  final isProfileLoading = false.obs;
+  final isProfileUpdateLoading = false.obs;
 
+  final profileModel = ProfileModel().obs;
   final emailController = TextEditingController().obs;
   final fullNameController = TextEditingController().obs;
   final addressController = TextEditingController().obs;
@@ -30,6 +29,7 @@ class ProfileScreenController extends GetxController {
 
   @override
   onInit() {
+    isProfileLoading.value = true;
     getProfileData();
     super.onInit();
   }
@@ -40,14 +40,13 @@ class ProfileScreenController extends GetxController {
     super.onClose();
   }
 
-  getProfileData() async {
+  void getProfileData() async {
     try {
-      isProfileLoading.value = true;
       final response = await getProfileDataUseCase(NoParams());
       response?.fold((failure) async {}, (data) async {
         profileModel.value = data;
-        emailController.value.text = profileModel.value.email!;
-        fullNameController.value.text = profileModel.value.name!;
+        emailController.value.text = data.email!;
+        fullNameController.value.text = data.name!;
         addressController.value.text = session.address!;
         aptSuiteController.value.text = session.aptSuit!;
         zipCodeController.value.text = session.zip!;
@@ -57,7 +56,7 @@ class ProfileScreenController extends GetxController {
     }
   }
 
-  Future<String?> updateProfile() async {
+  Future<void> updateProfile() async {
     Constants.USER_ID = profileModel.value.id!;
 
     Map<String, String> data = {};
@@ -82,21 +81,20 @@ class ProfileScreenController extends GetxController {
       data["zip"] = zipCodeController.value.text;
     }
 
-    String? error;
     try {
       isProfileUpdateLoading.value = true;
       final response = await updateProfileDataUseCase(data);
       response?.fold((failure) async {}, (data) async {
         profileModel.value = data;
-        emailController.value.text = profileModel.value.email!;
-        fullNameController.value.text = profileModel.value.name!;
+        emailController.value.text = data.email!;
+        fullNameController.value.text = data.name!;
         addressController.value.text = session.address!;
         aptSuiteController.value.text = session.aptSuit!;
         zipCodeController.value.text = session.zip!;
       });
     } finally {
+      getProfileData();
       isProfileUpdateLoading.value = false;
     }
-    return error;
   }
 }

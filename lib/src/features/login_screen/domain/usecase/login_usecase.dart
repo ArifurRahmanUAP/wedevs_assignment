@@ -12,6 +12,9 @@ class LoginUseCase implements UseCase<LoginResponseModel, LoginModel> {
 
   @override
   Future<Either<Failure, LoginResponseModel>?> call(LoginModel params) {
-    return loginRepositories.loginWithMobile(loginModel: params);
+    return loginRepositories.login(loginModel: params);
+
   }
+
+
 }

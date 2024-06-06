@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wedevs_assignment/src/core/extensions.dart';
 import 'package:wedevs_assignment/src/core/utilities/assets_path.dart';
+import 'package:wedevs_assignment/src/core/utilities/constants.dart';
 
 import '../../../../core/common_method/common_method.dart';
 import '../../../../core/di/app_component.dart';
@@ -17,7 +18,9 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      bottom: false,
       child: Scaffold(
+        extendBody: true,
         appBar: AppBar(
           title: const Text(
             "My Account",
@@ -33,130 +36,182 @@ class ProfileScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
         ),
         body: SingleChildScrollView(
-          child: Container(
-            margin: const EdgeInsets.symmetric(
-              horizontal: 20,
-            ),
-            color: Colors.transparent,
-            child: Column(
-              children: [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 3),
-                    child: DottedBorder(
-                      borderType: BorderType.Circle,
-                      radius: const Radius.circular(22),
-                      padding: const EdgeInsets.all(2),
-                      color: const Color(0xFFFFADAD),
-                      dashPattern: const [6, 3],
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(22),
-                        ),
-                        child: Obx(
-                          () => Container(
-                            height: 44,
-                            width: 44,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: profileScreenController
+          child: Stack(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                color: Colors.transparent,
+                child: Column(
+                  children: [
+                    10.ph,
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 3),
+                        child: DottedBorder(
+                          borderType: BorderType.Circle,
+                          radius: const Radius.circular(100),
+                          padding: const EdgeInsets.all(5),
+                          color: const Color(0xFFFFADAD),
+                          dashPattern: const [6, 3],
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(150),
+                            ),
+                            child: Obx(
+                                  () =>
+                                  Container(
+                                    height: 115,
+                                    width: 115,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: profileScreenController
                                                 .profileModel.value.id !=
-                                            null
-                                        ? NetworkImage(profileScreenController
-                                            .profileModel
-                                            .value
-                                            .avatarUrls!["96"]!)
-                                        : const AssetImage(
+                                                null
+                                                ? NetworkImage(
+                                                profileScreenController
+                                                    .profileModel
+                                                    .value
+                                                    .avatarUrls!["96"]!)
+                                                : const AssetImage(
                                                 "assets/image_not_found.jpg")
                                             as ImageProvider,
-                                    fit: BoxFit.fill)),
+                                            fit: BoxFit.fill)),
+                                  ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-                Obx(
-                  () => Text(
-                    profileScreenController.profileModel.value.name ?? "",
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontFamily: "Roboto",
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Obx(
-                  () => Text(
-                    profileScreenController.profileModel.value.email ?? "",
-                    style: const TextStyle(
-                        color: Color(0xFF535353),
-                        fontSize: 16,
-                        fontFamily: "Lato",
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.normal),
-                  ),
-                ),
-                25.ph,
-                Card(
-                  color: Colors.white,
-                  elevation: 3,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Theme(
-                        data: Theme.of(context)
-                            .copyWith(dividerColor: Colors.white),
-                        child: Column(
-                          children: [
-                            expandedWidgets(
-                              children: accountExpandData(context: context),
-                              title: "Account",
-                              icon: AssetsPath.PROFILE_BOTTOM_SHEET_LOGO,
-                              isEnable: true,
+                    30.ph,
+                    Obx(
+                          () =>
+                          Text(
+                            profileScreenController.profileModel.value.name ?? "",
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontFamily: "Roboto",
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.bold),
+                          ),
+                    ),
+                    Obx(
+                          () =>
+                          Text(
+                            profileScreenController.profileModel.value.email ??
+                                "",
+                            style: const TextStyle(
+                                color: Color(0xFF535353),
+                                fontSize: 16,
+                                fontFamily: "Lato",
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.normal),
+                          ),
+                    ),
+                    25.ph,
+                    Card(
+                      color: Colors.white,
+                      elevation: 3,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Theme(
+                            data: Theme.of(context)
+                                .copyWith(dividerColor: Colors.white),
+                            child: Column(
+                              children: [
+                                expandedWidgets(
+                                  children: accountExpandData(context: context),
+                                  title: "Account",
+                                  icon: AssetsPath.PROFILE_BOTTOM_SHEET_LOGO,
+                                  isEnable: true,
+                                ),
+                                Container(
+                                  margin:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                                  height: 2,
+                                  color: const Color(0xffe1e4eb),
+                                ),
+                                expandedWidgets(
+                                  children: Container(),
+                                  title: "Passwords",
+                                  icon: AssetsPath.PASSWORD_ICON,
+                                  isEnable: false,
+                                ),
+                                Container(
+                                  margin:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                                  height: 2,
+                                  color: const Color(0xffe1e4eb),
+                                ),
+                                expandedWidgets(
+                                  children: Container(),
+                                  title: "Notification",
+                                  icon: AssetsPath.NOTIFICATION_ICON,
+                                  isEnable: false,
+                                ),
+                                Container(
+                                  margin:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                                  height: 2,
+                                  color: const Color(0xffe1e4eb),
+                                ),
+                                expandedWidgets(
+                                  children: Container(),
+                                  title: "Wishlist (00)",
+                                  icon: AssetsPath.WISHLIST_ICON,
+                                  isEnable: false,
+                                ),
+                              ],
                             ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 20),
-                              height: 2,
-                              color: const Color(0xffe1e4eb),
-                            ),
-                            expandedWidgets(
-                              children: Container(),
-                              title: "Passwords",
-                              icon: AssetsPath.PASSWORD_ICON,
-                              isEnable: false,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 20),
-                              height: 2,
-                              color: const Color(0xffe1e4eb),
-                            ),
-                            expandedWidgets(
-                              children: Container(),
-                              title: "Notification",
-                              icon: AssetsPath.NOTIFICATION_ICON,
-                              isEnable: false,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 20),
-                              height: 2,
-                              color: const Color(0xffe1e4eb),
-                            ),
-                            expandedWidgets(
-                              children: Container(),
-                              title: "Wishlist (00)",
-                              icon: AssetsPath.WISHLIST_ICON,
-                              isEnable: false,
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+              Obx(() {
+                return Visibility(
+                  visible: profileScreenController.isProfileLoading.value,
+                  child: Center(
+                    child: Container(
+                        padding: const EdgeInsets.all(10),
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * .9,
+                        height: 100,
+                        decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius:
+                            BorderRadius.circular(10)),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            15.pw,
+                            const CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                            15.pw,
+                            const Text(
+                              "Loading...",
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            )
+                          ],
+                        )),
+                  ),
+                );
+              }),
+            ],
           ),
         ),
       ),
@@ -216,11 +271,10 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget expandedWidgets(
-      {required children,
-      required String title,
-      required String icon,
-      required bool isEnable}) {
+  Widget expandedWidgets({required children,
+    required String title,
+    required String icon,
+    required bool isEnable}) {
     return Column(
       children: [
         ExpansionTile(
@@ -272,40 +326,44 @@ class ProfileScreen extends StatelessWidget {
             titleText: "Email",
             hintText: "youremail@xmail.com",
             textEditingController:
-                profileScreenController.emailController.value),
+            profileScreenController.emailController.value),
         20.ph,
         editTextField(
             context: context,
             titleText: "Full Name",
             hintText: "William Bennett",
             textEditingController:
-                profileScreenController.fullNameController.value),
+            profileScreenController.fullNameController.value),
         20.ph,
         editTextField(
             context: context,
             titleText: "Street Address",
             hintText: "465 Nolan Causeway Suite 079",
             textEditingController:
-                profileScreenController.addressController.value),
+            profileScreenController.addressController.value),
         20.ph,
         editTextField(
             context: context,
             titleText: "Apt, Suite, Bldg (optional)",
             hintText: "Unit 512",
             textEditingController:
-                profileScreenController.aptSuiteController.value),
+            profileScreenController.aptSuiteController.value),
         20.ph,
         SizedBox(
-          width: MediaQuery.of(context).size.width * .3,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width * .3,
           child: editTextField(
               context: context,
               titleText: "Zip Code",
               hintText: "77017",
               textEditingController:
-                  profileScreenController.zipCodeController.value),
+              profileScreenController.zipCodeController.value),
         ),
         30.ph,
         CommonMethods.saveCancelButtons(
+          isLoading: profileScreenController.isProfileUpdateLoading,
           leftButtonTitle: "Cancel",
           rightButtonTitle: "Save",
           leftButtonCallBack: () {},

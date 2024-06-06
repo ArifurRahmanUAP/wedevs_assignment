@@ -29,7 +29,6 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
         responseCallback: (response, message) {
           try {
             apiResponse = Response.success(ProfileModel.fromJson(response));
-            logger.e(apiResponse);
           } catch (e) {
             apiResponse = Response.error(e.toString(), 500);
           }

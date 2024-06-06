@@ -15,6 +15,7 @@ class LoginController extends GetxController {
   LoginController({required this.loginUseCase});
 
   final isPasswordVisible = false.obs;
+  final isLoginLoading = false.obs;
   final TextEditingController userEmailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -43,10 +44,17 @@ class LoginController extends GetxController {
     required LoginModel loginModel,
     required BuildContext context,
   }) async {
-    final response = await loginUseCase(loginModel);
-    response?.fold((failure) async {}, (data) async {
-      session.createSession(data);
-      RouteGenerator.pushNamedAndRemoveAll(context, Routes.landingPage);
-    });
+    try {
+      isLoginLoading.value = true;
+      final response = await loginUseCase(loginModel);
+      response?.fold((failure) async {
+
+      }, (data) async {
+        session.createSession(data);
+        RouteGenerator.pushNamedAndRemoveAll(context, Routes.landingPage);
+      });
+    } finally {
+      isLoginLoading.value = false;
+    }
   }
 }

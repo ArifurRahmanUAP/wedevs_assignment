@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:wedevs_assignment/src/core/extensions.dart';
 import 'package:wedevs_assignment/src/core/utilities/assets_path.dart';
 
+import '../../../../core/common_method/common_method.dart';
 import '../../../../core/di/app_component.dart';
 import '../../../../core/routes/route_name.dart';
 import '../../../../core/routes/router.dart';
@@ -13,6 +14,7 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
   final LoginController loginScreenController = locator<LoginController>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,19 +27,28 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Spacer(),
                 loginLogo(),
                 60.ph,
                 signInText(),
                 40.ph,
-                emailTextField(context: context),
-                20.ph,
-                userPasswordTextField(context: context),
-                10.ph,
+
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      emailTextField(context: context),
+                      20.ph,
+                      userPasswordTextField(context: context),
+                      10.ph,
+                    ],
+                  ),
+                ),
                 forgetPasswordText(context: context),
-                50.ph,
+                30.ph,
+                CommonMethods.socialMediaSignUp(context: context),
+                30.ph,
                 loginButton(context: context),
-                const Spacer(flex: 2),
+                30.ph,
                 signUpButton(context: context),
                 30.ph,
               ],
@@ -74,8 +85,17 @@ class LoginScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         padding: const EdgeInsets.all(10),
-        child: TextField(
+        child: TextFormField(
           controller: loginScreenController.userEmailController,
+          onChanged: (value) {
+            _formKey.currentState!.validate();
+          },
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Email can't be empty.";
+            }
+            return null;
+          },
           decoration: const InputDecoration(
             filled: true,
             prefixIcon: Icon(
@@ -103,9 +123,18 @@ class LoginScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         padding: const EdgeInsets.all(10),
-        child: TextField(
+        child: TextFormField(
           controller: loginScreenController.passwordController,
           obscureText: !loginScreenController.isPasswordVisible.value,
+          onChanged: (value) {
+            _formKey.currentState!.validate();
+          },
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Password can't be empty.";
+            }
+            return null;
+          },
           decoration: InputDecoration(
             filled: true,
             prefixIcon: const Icon(
@@ -154,19 +183,29 @@ class LoginScreen extends StatelessWidget {
       height: 60,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(const Color(0xffF75F55)),
-          shape: WidgetStateProperty.all(
+          backgroundColor: MaterialStateProperty.all(const Color(0xffF75F55)),
+          shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
           ),
         ),
-        onPressed: () => loginScreenController.loginButtonPressed(context: context),
-        child: const Text(
-          "Login",
-          style: TextStyle(
-              fontSize: 17, fontWeight: FontWeight.w500, color: Colors.white),
-        ),
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            loginScreenController.loginButtonPressed(context: context);
+          }
+        },
+        child: loginScreenController.isLoginLoading.value
+            ? const CircularProgressIndicator(
+                color: Colors.white,
+              )
+            : const Text(
+                "Login",
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white),
+              ),
       ),
     );
   }

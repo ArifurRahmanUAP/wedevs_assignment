@@ -37,7 +37,7 @@ class LandingScreen extends StatelessWidget {
                 gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    colors: <Color>[Color(0xffFF679B), Color(0xffFF7B51)])),
+                    colors: [Color(0xffFF679B), Color(0xffFF7B51)])),
             margin: const EdgeInsets.all(5),
             height: 60,
             width: 60,
@@ -92,57 +92,78 @@ class LandingScreen extends StatelessWidget {
   }
 
   Widget bottomBar({required BuildContext context}) {
-    return BottomAppBar(
-      height: 75,
-      surfaceTintColor: Colors.white,
-      elevation: 0,
-      color: Colors.white,
-      shape: const CircularNotchedRectangle(),
-      notchMargin: 3,
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          IconButton(
-            icon: Obx(() => SvgPicture.asset(
-                  AssetsPath.HOME_BOTTOM_SHEET_LOGO,
-                  color: _controller.selectedPageIndex.value == 0
-                      ? const Color(0xFFFF679B)
-                      : const Color(0xFF6E7FAA),
-                )),
-            onPressed: () => _controller.selectedPageIndex.value = 0,
-          ),
-          IconButton(
-            icon: Obx(() => SvgPicture.asset(
-                  AssetsPath.MENU_BOTTOM_SHEET_LOGO,
-                  color: _controller.selectedPageIndex.value == 1
-                      ? const Color(0xFFFF679B)
-                      : const Color(0xFF6E7FAA),
-                )),
-            onPressed: () => _controller.selectedPageIndex.value = 1,
-          ),
-          SizedBox(
-            width: 40,
-          ),
-          IconButton(
-            icon: Obx(() => SvgPicture.asset(
-                  AssetsPath.CART_BOTTOM_SHEET_LOGO,
-                  color: _controller.selectedPageIndex.value == 2
-                      ? const Color(0xFFFF679B)
-                      : const Color(0xFF6E7FAA),
-                )),
-            onPressed: () => _controller.selectedPageIndex.value = 2,
-          ),
-          IconButton(
-            icon: Obx(() => SvgPicture.asset(
-                  AssetsPath.PROFILE_BOTTOM_SHEET_LOGO,
-                  color: _controller.selectedPageIndex.value == 3
-                      ? const Color(0xFFFF679B)
-                      : const Color(0xFF6E7FAA),
-                )),
-            onPressed: () => _controller.selectedPageIndex.value = 3,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(15.0),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 5.0,
+            offset: Offset(0, -1),
           ),
         ],
+      ),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(15),
+          topLeft: Radius.circular(15),
+        ),
+        child: BottomAppBar(
+          shadowColor: Colors.black,
+          height: 70,
+          surfaceTintColor: Colors.white,
+          elevation: 10,
+          color: Colors.white,
+          shape: const CircularNotchedRectangle(),
+          notchMargin: 2,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              IconButton(
+                icon: Obx(() => SvgPicture.asset(
+                      AssetsPath.HOME_BOTTOM_SHEET_LOGO,
+                      color: _controller.selectedPageIndex.value == 0
+                          ? const Color(0xFFFF679B)
+                          : const Color(0xFF6E7FAA),
+                    )),
+                onPressed: () => _controller.selectedPageIndex.value = 0,
+              ),
+              IconButton(
+                icon: Obx(() => SvgPicture.asset(
+                      AssetsPath.MENU_BOTTOM_SHEET_LOGO,
+                      color: _controller.selectedPageIndex.value == 1
+                          ? const Color(0xFFFF679B)
+                          : const Color(0xFF6E7FAA),
+                    )),
+                onPressed: () => _controller.selectedPageIndex.value = 1,
+              ),
+              const SizedBox(
+                width: 40,
+              ),
+              IconButton(
+                icon: Obx(() => SvgPicture.asset(
+                      AssetsPath.CART_BOTTOM_SHEET_LOGO,
+                      color: _controller.selectedPageIndex.value == 2
+                          ? const Color(0xFFFF679B)
+                          : const Color(0xFF6E7FAA),
+                    )),
+                onPressed: () => _controller.selectedPageIndex.value = 2,
+              ),
+              IconButton(
+                icon: Obx(() => SvgPicture.asset(
+                      AssetsPath.PROFILE_BOTTOM_SHEET_LOGO,
+                      color: _controller.selectedPageIndex.value == 3
+                          ? const Color(0xFFFF679B)
+                          : const Color(0xFF6E7FAA),
+                    )),
+                onPressed: () => _controller.selectedPageIndex.value = 3,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

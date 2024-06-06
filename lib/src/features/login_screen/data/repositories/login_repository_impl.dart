@@ -7,17 +7,16 @@ import '../model/login_model.dart';
 import '../model/login_response_model.dart';
 import '../source/login_remote_data_source.dart';
 
-
 class LoginRepositoryImpl implements LoginRepository {
   final LoginRemoteDataSource loginRemoteDataSource;
 
   LoginRepositoryImpl({required this.loginRemoteDataSource});
 
   @override
-  Future<Either<Failure, LoginResponseModel>> loginWithMobile(
+  Future<Either<Failure, LoginResponseModel>> login(
       {required LoginModel loginModel}) async {
     return await BodyCall<LoginResponseModel>()(
-      () => loginRemoteDataSource.loginWithMobile(loginModel: loginModel),
+      () => loginRemoteDataSource.login(loginModel: loginModel),
     );
   }
 }

@@ -16,8 +16,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.transparent,
+    return SafeArea(
+      bottom: false,
       child: Scaffold(
         body: GetBuilder<HomeScreenController>(initState: (state) async {
           homePageController.readData();
@@ -249,6 +249,7 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                     35.ph,
                                     CommonMethods.saveCancelButtons(
+                                      isLoading: Rx<bool>(false),
                                       leftButtonTitle: "Cancel",
                                       rightButtonTitle: "Apply",
                                       leftButtonCallBack: () {},
@@ -355,7 +356,7 @@ class HomeScreen extends StatelessWidget {
                         Expanded(
                             flex: 2,
                             child: Container(
-                              margin: EdgeInsets.symmetric(horizontal: 5),
+                              margin: const EdgeInsets.symmetric(horizontal: 5),
                               padding: const EdgeInsets.fromLTRB(3, 1, 2, 1),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,

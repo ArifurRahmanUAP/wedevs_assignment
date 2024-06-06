@@ -4,7 +4,6 @@ class LoginResponseModel {
     this.userEmail,
     this.userNicename,
     this.userDisplayName,
-    this.code,
     this.message,
   });
 
@@ -13,7 +12,6 @@ class LoginResponseModel {
     userEmail = json['user_email'];
     userNicename = json['user_nicename'];
     userDisplayName = json['user_display_name'];
-    code = json['code'];
     message = json['message'];
   }
 
@@ -21,7 +19,6 @@ class LoginResponseModel {
   String? userEmail;
   String? userNicename;
   String? userDisplayName;
-  String? code;
   String? message;
 
   LoginResponseModel copyWith({
@@ -29,7 +26,6 @@ class LoginResponseModel {
     String? userEmail,
     String? userNicename,
     String? userDisplayName,
-    String? code,
     String? message,
   }) =>
       LoginResponseModel(
@@ -37,7 +33,6 @@ class LoginResponseModel {
         userEmail: userEmail ?? this.userEmail,
         userNicename: userNicename ?? this.userNicename,
         userDisplayName: userDisplayName ?? this.userDisplayName,
-        code: code ?? this.code,
         message: message ?? this.message,
       );
 
@@ -47,7 +42,6 @@ class LoginResponseModel {
     map['user_email'] = userEmail;
     map['user_nicename'] = userNicename;
     map['user_display_name'] = userDisplayName;
-    map['code'] = code;
     map['message'] = message;
     return map;
   }

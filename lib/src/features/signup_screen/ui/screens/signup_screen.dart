@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:wedevs_assignment/src/core/common_method/common_method.dart';
 import 'package:wedevs_assignment/src/core/extensions.dart';
 import 'package:wedevs_assignment/src/core/routes/router.dart';
 import 'package:wedevs_assignment/src/core/utilities/assets_path.dart';
@@ -14,6 +17,7 @@ class SignUpScreen extends StatelessWidget {
 
   final SignupScreenController signupScreenController =
       locator<SignupScreenController>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,22 +27,31 @@ class SignUpScreen extends StatelessWidget {
           return SafeArea(
             child: Center(
               child: Container(
-                margin: const EdgeInsets.all(30),
+                margin: const EdgeInsets.symmetric(horizontal: 30),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      userNameTextField(),
-                      20.ph,
-                      userEmailTextField(),
-                      20.ph,
-                      userPasswordTextField(context: context),
-                      20.ph,
-                      userConfirmPasswordTextField(context: context),
+                      userProfilePic(context: context),
+                      25.ph,
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            userNameTextField(),
+                            20.ph,
+                            userEmailTextField(),
+                            20.ph,
+                            userPasswordTextField(context: context),
+                            20.ph,
+                            userConfirmPasswordTextField(context: context),
+                          ],
+                        ),
+                      ),
                       60.ph,
                       signUpButton(context: context),
                       40.ph,
-                      socialMediaSignUp(context: context),
+                      CommonMethods.socialMediaSignUp(context: context),
                       30.ph,
                       loginPageButton(context: context),
                     ],
@@ -93,8 +106,17 @@ class SignUpScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         padding: const EdgeInsets.all(10),
-        child: TextField(
+        child: TextFormField(
           controller: signupScreenController.userFullNameController,
+          onChanged: (value) {
+            _formKey.currentState!.validate();
+          },
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Name can't be empty.";
+            }
+            return null;
+          },
           decoration: const InputDecoration(
             filled: true,
             prefixIcon: Icon(
@@ -122,8 +144,17 @@ class SignUpScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         padding: const EdgeInsets.all(10),
-        child: TextField(
+        child: TextFormField(
           controller: signupScreenController.userEmailController,
+          onChanged: (value) {
+            _formKey.currentState!.validate();
+          },
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Email can't be empty.";
+            }
+            return null;
+          },
           decoration: const InputDecoration(
             filled: true,
             prefixIcon: Icon(
@@ -151,9 +182,18 @@ class SignUpScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         padding: const EdgeInsets.all(10),
-        child: TextField(
+        child: TextFormField(
           controller: signupScreenController.passwordController,
           obscureText: !signupScreenController.isPasswordVisible.value,
+          onChanged: (value) {
+            _formKey.currentState!.validate();
+          },
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Password can't be empty.";
+            }
+            return null;
+          },
           decoration: InputDecoration(
             filled: true,
             prefixIcon: const Icon(
@@ -194,9 +234,21 @@ class SignUpScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         padding: const EdgeInsets.all(10),
-        child: TextField(
+        child: TextFormField(
           controller: signupScreenController.confirmPasswordController,
           obscureText: !signupScreenController.isConfirmPasswordVisible.value,
+          onChanged: (value) {
+            _formKey.currentState!.validate();
+          },
+          validator: (value) {
+            if (value!.isEmpty) {
+              return "Confirm Password can't be empty.";
+            } else if (value !=
+                signupScreenController.passwordController.value.text) {
+              return "Confirm Password doesn't Match";
+            }
+            return null;
+          },
           decoration: InputDecoration(
             filled: true,
             prefixIcon: const Icon(
@@ -231,57 +283,30 @@ class SignUpScreen extends StatelessWidget {
       height: 60,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(const Color(0xffF75F55)),
-          shape: WidgetStateProperty.all(
+          backgroundColor: MaterialStateProperty.all(const Color(0xffF75F55)),
+          shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
           ),
         ),
-        onPressed: () => signupScreenController.signUpButtonPressed(),
-        child: const Text(
-          "Sign Up",
-          style: TextStyle(
-              fontSize: 17, fontWeight: FontWeight.w500, color: Colors.white),
-        ),
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            signupScreenController.signUpButtonPressed();
+          }
+        },
+        child: signupScreenController.isFinalLoading.value
+            ? const CircularProgressIndicator(
+                color: Colors.white,
+              )
+            : const Text(
+                "Sign Up",
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white),
+              ),
       ),
-    );
-  }
-
-  Widget socialMediaSignUp({required BuildContext context}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Material(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          elevation: 2,
-          child: Container(
-            height: 56,
-            width: 56,
-            padding: const EdgeInsets.all(10),
-            child: SvgPicture.asset(
-              AssetsPath.FACEBOOK_LOGO,
-            ),
-          ),
-        ),
-        20.pw,
-        Material(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          elevation: 2,
-          child: Container(
-            height: 56,
-            width: 56,
-            padding: const EdgeInsets.all(10),
-            child: SvgPicture.asset(
-              AssetsPath.GOOGLE_LOGO,
-            ),
-          ),
-        ),
-      ],
     );
   }
 
@@ -309,6 +334,57 @@ class SignUpScreen extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+
+  Widget userProfilePic({required BuildContext context}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Stack(
+        children: [
+          SizedBox(
+            height: 120,
+            width: 120,
+            child: Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: Center(
+                child: (signupScreenController.imgFile.value.path.isEmpty)
+                    ? SvgPicture.asset(AssetsPath.PROFILE_BOTTOM_SHEET_LOGO)
+                    : Image.file(
+                        File(signupScreenController.imgFile.value.path)),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            child: GestureDetector(
+              onTap: () {
+                signupScreenController.pickImage(context: context);
+              },
+              child: Container(
+                height: 35,
+                width: 35,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFFFF9472), Color(0xFFF2709C)],
+                  ),
+                ),
+                child: const Icon(
+                  Icons.camera_alt,
+                  size: 15,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
