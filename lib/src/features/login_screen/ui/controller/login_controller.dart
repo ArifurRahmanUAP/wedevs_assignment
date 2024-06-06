@@ -29,8 +29,9 @@ class LoginController extends GetxController {
     isPasswordVisible.value = !isPasswordVisible.value;
   }
 
-
-  void loginButtonPressed({required BuildContext context}) {
+  void loginButtonPressed({
+    required BuildContext context,
+  }) {
     LoginModel loginModel = LoginModel(
       username: userEmailController.text,
       password: passwordController.text,
@@ -38,10 +39,12 @@ class LoginController extends GetxController {
     userLoginApiCall(loginModel: loginModel, context: context);
   }
 
-  void userLoginApiCall({required LoginModel loginModel, required BuildContext context}) async {
+  void userLoginApiCall({
+    required LoginModel loginModel,
+    required BuildContext context,
+  }) async {
     final response = await loginUseCase(loginModel);
-    response?.fold((failure) async {
-    }, (data) async {
+    response?.fold((failure) async {}, (data) async {
       session.createSession(data);
       RouteGenerator.pushNamedAndRemoveAll(context, Routes.landingPage);
     });

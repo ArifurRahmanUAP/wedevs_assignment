@@ -1,5 +1,7 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:wedevs_assignment/src/core/extensions.dart';
 import 'package:wedevs_assignment/src/core/utilities/assets_path.dart';
 
@@ -16,52 +18,129 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            "My Account",
+            style: TextStyle(
+                color: Color(0xFF222455),
+                fontSize: 18,
+                fontFamily: "Roboto",
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+        ),
         body: SingleChildScrollView(
           child: Container(
             margin: const EdgeInsets.symmetric(
               horizontal: 20,
             ),
-            color: Colors.white,
-            child: Card(
-              color: Colors.white,
-              elevation: 3,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Theme(
-                    data: Theme.of(context)
-                        .copyWith(dividerColor: Colors.transparent),
-                    child: Column(
-                      children: [
-                        expandedWidgets(
-                          children: accountExpandData(context: context),
-                          title: "Account",
-                          icon: AssetsPath.PROFILE_BOTTOM_SHEET_LOGO,
-                          isEnable: true,
+            color: Colors.transparent,
+            child: Column(
+              children: [
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 3),
+                    child: DottedBorder(
+                      borderType: BorderType.Circle,
+                      radius: const Radius.circular(22),
+                      padding: const EdgeInsets.all(2),
+                      color: const Color(0xFFFFADAD),
+                      dashPattern: const [6, 3],
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(22),
                         ),
-                        expandedWidgets(
-                          children: Container(),
-                          title: "Passwords",
-                          icon: AssetsPath.PASSWORD_ICON,
-                          isEnable: false,
+                        child: Obx(
+                          () => Container(
+                            height: 44,
+                            width: 44,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: profileScreenController
+                                                .profileModel.value.id !=
+                                            null
+                                        ? NetworkImage(profileScreenController
+                                            .profileModel
+                                            .value
+                                            .avatarUrls!["96"]!)
+                                        : const AssetImage(
+                                                "assets/image_not_found.jpg")
+                                            as ImageProvider,
+                                    fit: BoxFit.fill)),
+                          ),
                         ),
-                        expandedWidgets(
-                          children: Container(),
-                          title: "Notification",
-                          icon: AssetsPath.NOTIFICATION_ICON,
-                          isEnable: false,
-                        ),
-                        expandedWidgets(
-                          children: Container(),
-                          title: "Wishlist (00)",
-                          icon: AssetsPath.WISHLIST_ICON,
-                          isEnable: false,
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ],
-              ),
+                ),
+                Obx(
+                  () => Text(
+                    profileScreenController.profileModel.value.name ?? "",
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontFamily: "Roboto",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Obx(
+                  () => Text(
+                    profileScreenController.profileModel.value.email ?? "",
+                    style: const TextStyle(
+                        color: Color(0xFF535353),
+                        fontSize: 16,
+                        fontFamily: "Lato",
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.normal),
+                  ),
+                ),
+                25.ph,
+                Card(
+                  color: Colors.white,
+                  elevation: 3,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Theme(
+                        data: Theme.of(context)
+                            .copyWith(dividerColor: Colors.transparent),
+                        child: Column(
+                          children: [
+                            expandedWidgets(
+                              children: accountExpandData(context: context),
+                              title: "Account",
+                              icon: AssetsPath.PROFILE_BOTTOM_SHEET_LOGO,
+                              isEnable: true,
+                            ),
+                            expandedWidgets(
+                              children: Container(),
+                              title: "Passwords",
+                              icon: AssetsPath.PASSWORD_ICON,
+                              isEnable: false,
+                            ),
+                            expandedWidgets(
+                              children: Container(),
+                              title: "Notification",
+                              icon: AssetsPath.NOTIFICATION_ICON,
+                              isEnable: false,
+                            ),
+                            expandedWidgets(
+                              children: Container(),
+                              title: "Wishlist (00)",
+                              icon: AssetsPath.WISHLIST_ICON,
+                              isEnable: false,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -220,7 +299,9 @@ class ProfileScreen extends StatelessWidget {
           leftButtonTitle: "Cancel",
           rightButtonTitle: "Save",
           leftButtonCallBack: () {},
-          rightButtonCallBack: () {},
+          rightButtonCallBack: () {
+            profileScreenController.updateProfile();
+          },
         ),
         30.ph,
       ],

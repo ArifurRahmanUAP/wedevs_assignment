@@ -12,7 +12,7 @@ class CommonMethods {
       children: [
         Expanded(
           child: ElevatedButton(
-            onPressed: () => leftButtonCallBack,
+            onPressed: () => leftButtonCallBack(),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
               side: const BorderSide(color: Color(0xffbababa)),
@@ -26,7 +26,7 @@ class CommonMethods {
             ),
             child: Text(
               leftButtonTitle,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color(0xff607374),
                 fontWeight: FontWeight.w700,
                 fontSize: 18,
@@ -37,7 +37,7 @@ class CommonMethods {
         20.pw,
         Expanded(
           child: ElevatedButton(
-            onPressed: () => rightButtonCallBack,
+            onPressed: () => rightButtonCallBack(),
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xff1ABC9C),
               padding: const EdgeInsets.symmetric(
@@ -50,7 +50,7 @@ class CommonMethods {
             ),
             child: Text(
               rightButtonTitle,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color(0xffffffff),
                 fontWeight: FontWeight.w700,
                 fontSize: 18,

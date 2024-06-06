@@ -12,20 +12,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core:
-  firebase_crashlytics:
-  firebase_analytics:
-  firebase_performance:
-  firebase_messaging:
   get:
   build_runner:
+  dotted_border:
   equatable:
   get_it:
   rxdart:
   dio:
   shared_preferences:
   flutter_svg:
-  connectivity_plus:
   intl:
   dartz:
   flutter_localizations:

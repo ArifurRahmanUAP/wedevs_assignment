@@ -4,33 +4,41 @@ import 'package:wedevs_assignment/src/features/ProfileScreen/domain/repositories
 import 'package:wedevs_assignment/src/features/ProfileScreen/domain/usecase/get_profile_data_usecase.dart';
 
 import '../../../features/ProfileScreen/data/repositories/profile_repository_impl.dart';
+import '../../../features/ProfileScreen/domain/usecase/update_profile_data_usecase.dart';
 import '../../../features/ProfileScreen/ui/controller/profile_screen_controller.dart';
 import '../app_component.dart';
 
-Future<void> initProfile()  async {
+Future<void> initProfile() async {
 //! Controller
   locator.registerFactory(
-        () => Get.put(
-      ProfileScreenController(getProfileDataUseCase: locator()),
+    () => Get.put(
+      ProfileScreenController(
+          getProfileDataUseCase: locator(),
+          updateProfileDataUseCase: locator()),
     ),
   );
 //! Use cases
   locator.registerLazySingleton(
-        () => GetProfileDataUseCase(
+    () => GetProfileDataUseCase(
+      profileRepository: locator(),
+    ),
+  );
+  locator.registerLazySingleton(
+    () => UpdateProfileDataUseCase(
       profileRepository: locator(),
     ),
   );
 
 //! Repositories
   locator.registerLazySingleton<ProfileRepository>(
-        () => ProfileRepositoryImpl(
+    () => ProfileRepositoryImpl(
       profileRemoteDataSource: locator(),
     ),
   );
 
 //! Data sources
   locator.registerLazySingleton<ProfileRemoteDataSource>(
-        () => ProfileRemoteDataSourceImpl(
+    () => ProfileRemoteDataSourceImpl(
       dioClient: locator(),
     ),
   );

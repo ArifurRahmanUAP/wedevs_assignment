@@ -231,8 +231,8 @@ class SignUpScreen extends StatelessWidget {
       height: 60,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(const Color(0xffF75F55)),
-          shape: MaterialStateProperty.all(
+          backgroundColor: WidgetStateProperty.all(const Color(0xffF75F55)),
+          shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),

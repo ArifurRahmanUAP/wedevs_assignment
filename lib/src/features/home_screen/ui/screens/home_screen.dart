@@ -349,7 +349,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -383,7 +383,7 @@ class HomeScreen extends StatelessWidget {
                           homePageController.products[index].salePrice != ""
                               ? Text(
                             "\$${homePageController.products[index].salePrice}",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
                             ),

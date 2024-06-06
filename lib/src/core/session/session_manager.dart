@@ -1,26 +1,16 @@
 // ignore_for_file: non_constant_identifier_names
-import 'dart:io';
 
 import 'package:wedevs_assignment/src/features/login_screen/data/model/login_response_model.dart';
-import 'package:intl/intl.dart';
+
 import '../source/pref_manager.dart';
 import '../utilities/constants.dart';
 
 class SessionManager {
   Future<bool> createSession(LoginResponseModel userdata) async {
     try {
-      var appID =
-          Platform.isIOS ? Constants.APP_ID_IOS : Constants.APP_ID_ANDROID;
-      final df = DateFormat('yyyy-MM-dd');
-      String loginEntryDay = df.format(DateTime.now()).toString();
-
       setIsLoggedIn = true;
-      setPlatformWiseAppId = appID;
-      setLoginEntryDate = loginEntryDay;
-      setToken= userdata.token;
-      setUserEmail= userdata.userEmail;
-      setUserNicename = userdata.userNicename;
-      setUserDisplayName = userdata.userDisplayName;
+      setToken = userdata.token;
+      setUserEmail = userdata.userEmail;
       return true;
     } catch (e) {
       return false;
@@ -31,53 +21,55 @@ class SessionManager {
 
   SessionManager(this._prefManager);
 
-  String? get loginEntryDate =>
-      _prefManager.getStringValue(Constants.SESSION_KEY_LAST_LOGIN_TIME);
-
-  set setLoginEntryDate(String? value) => _prefManager.saveString(
-      Constants.SESSION_KEY_LAST_LOGIN_TIME, value ?? "");
-
-
   bool? get isLoggedIn =>
-      _prefManager.getBoolValue(Constants.SESSION_KEY_ISLOGGEDIN);
+      _prefManager.getBoolValue(Constants.SESSION_KEY_IS_LOGGED_IN);
 
   set setIsLoggedIn(bool value) =>
-      _prefManager.saveBoolean(Constants.SESSION_KEY_ISLOGGEDIN, value);
+      _prefManager.saveBoolean(Constants.SESSION_KEY_IS_LOGGED_IN, value);
 
+  String? get token => _prefManager.getStringValue(Constants.SESSION_KEY_TOKEN);
 
-
-  String? get token =>
-      _prefManager.getStringValue(Constants.SESSION_KEY_TOKEN);
-
-  set setToken(String? value) => _prefManager.saveString(
-      Constants.SESSION_KEY_TOKEN, value ?? "");
-
+  set setToken(String? value) =>
+      _prefManager.saveString(Constants.SESSION_KEY_TOKEN, value ?? "");
 
   String? get userEmail =>
       _prefManager.getStringValue(Constants.SESSION_KEY_EMAIL);
 
-  set setUserEmail(String? value) => _prefManager.saveString(
-      Constants.SESSION_KEY_EMAIL, value ?? "");
+  set setUserEmail(String? value) =>
+      _prefManager.saveString(Constants.SESSION_KEY_EMAIL, value ?? "");
 
+  String? get address =>
+      _prefManager.getStringValue(Constants.SESSION_KEY_ADDRESS);
 
-  String? get userNicename =>
-      _prefManager.getStringValue(Constants.SESSION_KEY_NICE_NAME);
+  set setAddress(String? value) =>
+      _prefManager.saveString(Constants.SESSION_KEY_ADDRESS, value ?? "");
 
-  set setUserNicename(String? value) => _prefManager.saveString(
-      Constants.SESSION_KEY_NICE_NAME, value ?? "");
+  String? get aptSuit => _prefManager.getStringValue(Constants.SESSION_KEY_APT);
 
+  set setAptSuit(String? value) =>
+      _prefManager.saveString(Constants.SESSION_KEY_APT, value ?? "");
 
-  String? get userDisplayName =>
-      _prefManager.getStringValue(Constants.SESSION_KEY_DISPLAY_NAME);
+  String? get zip => _prefManager.getStringValue(Constants.SESSION_KEY_ZIP);
 
-  set setUserDisplayName(String? value) => _prefManager.saveString(
-      Constants.SESSION_KEY_DISPLAY_NAME, value ?? "");
+  set setZip(String? value) =>
+      _prefManager.saveString(Constants.SESSION_KEY_ZIP, value ?? "");
 
-  String? get platformWiseAppId =>
-      _prefManager.getStringValue(Constants.SESSION_KEY_APP_ID);
+  String? get name => _prefManager.getStringValue(Constants.SESSION_KEY_NAME);
 
-  set setPlatformWiseAppId(String? value) => _prefManager.saveString(
-      Constants.SESSION_KEY_APP_ID, value ?? "");
+  set setName(String? value) =>
+      _prefManager.saveString(Constants.SESSION_KEY_NAME, value ?? "");
+
+  String? get userFirstName =>
+      _prefManager.getStringValue(Constants.SESSION_KEY_FIRST_NAME);
+
+  set setUserFirstName(String? value) =>
+      _prefManager.saveString(Constants.SESSION_KEY_FIRST_NAME, value ?? "");
+
+  String? get userLastName =>
+      _prefManager.getStringValue(Constants.SESSION_KEY_LAST_NAME);
+
+  set setUserLastName(String? value) =>
+      _prefManager.saveString(Constants.SESSION_KEY_LAST_NAME, value ?? "");
 
   clearSession() async {}
 
