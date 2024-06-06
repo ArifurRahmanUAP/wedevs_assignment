@@ -23,6 +23,10 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'wedevs_assignment',
+      theme: ThemeData(
+        useMaterial3: true,
+        canvasColor: Colors.white,
+      ),
       onGenerateRoute: RouteGenerator.onRouteGenerate,
       home: const Splashscreen(),
     );

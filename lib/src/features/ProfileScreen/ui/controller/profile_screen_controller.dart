@@ -12,19 +12,17 @@ class ProfileScreenController extends GetxController {
   final GetProfileDataUseCase getProfileDataUseCase;
   final UpdateProfileDataUseCase updateProfileDataUseCase;
 
-  ProfileScreenController(
-      {required this.getProfileDataUseCase,
-      required this.updateProfileDataUseCase});
+  final isProfileLoading = false.obs;
+  final isProfileUpdateLoading = false.obs;
+
+  ProfileScreenController({
+    required this.getProfileDataUseCase,
+    required this.updateProfileDataUseCase,
+  });
 
   final profileModel = ProfileModel().obs;
 
-  @override
-  void onClose() {
-    Get.delete<ProfileScreenController>();
-    super.onClose();
-  }
-
-  final emailController = TextEditingController(text: session.userEmail).obs;
+  final emailController = TextEditingController().obs;
   final fullNameController = TextEditingController().obs;
   final addressController = TextEditingController().obs;
   final aptSuiteController = TextEditingController().obs;
@@ -36,16 +34,27 @@ class ProfileScreenController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    Get.delete<ProfileScreenController>();
+    super.onClose();
+  }
+
   getProfileData() async {
-    final response = await getProfileDataUseCase(NoParams());
-    response?.fold((failure) async {}, (data) async {
-      profileModel.value = data;
-      emailController.value.text = profileModel.value.email!;
-      fullNameController.value.text = profileModel.value.name!;
-      addressController.value.text = session.address!;
-      aptSuiteController.value.text = session.aptSuit!;
-      zipCodeController.value.text = session.zip!;
-    });
+    try {
+      isProfileLoading.value = true;
+      final response = await getProfileDataUseCase(NoParams());
+      response?.fold((failure) async {}, (data) async {
+        profileModel.value = data;
+        emailController.value.text = profileModel.value.email!;
+        fullNameController.value.text = profileModel.value.name!;
+        addressController.value.text = session.address!;
+        aptSuiteController.value.text = session.aptSuit!;
+        zipCodeController.value.text = session.zip!;
+      });
+    } finally {
+      isProfileLoading.value = false;
+    }
   }
 
   Future<String?> updateProfile() async {
@@ -75,8 +84,8 @@ class ProfileScreenController extends GetxController {
 
     String? error;
     try {
-      logger.e(data);
-    final response = await updateProfileDataUseCase(data);
+      isProfileUpdateLoading.value = true;
+      final response = await updateProfileDataUseCase(data);
       response?.fold((failure) async {}, (data) async {
         profileModel.value = data;
         emailController.value.text = profileModel.value.email!;
@@ -84,9 +93,10 @@ class ProfileScreenController extends GetxController {
         addressController.value.text = session.address!;
         aptSuiteController.value.text = session.aptSuit!;
         zipCodeController.value.text = session.zip!;
-
       });
-    } finally {}
+    } finally {
+      isProfileUpdateLoading.value = false;
+    }
     return error;
   }
 }

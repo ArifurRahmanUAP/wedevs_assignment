@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:wedevs_assignment/src/core/extensions.dart';
 
 import '../../../../utilities/assets_path.dart';
 import '../controller/landing_screen_controller.dart';
@@ -26,9 +25,10 @@ class LandingScreen extends StatelessWidget {
         return true;
       },
       child: Obx(
-        () => Scaffold(
+        () =>Scaffold(
+          extendBody: true,
+          // backgroundColor: Colors.transparent,
           body: _controller.children[_controller.selectedPageIndex.value],
-          bottomNavigationBar: bottomBar(context: context),
           floatingActionButton: Container(
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(
@@ -44,7 +44,9 @@ class LandingScreen extends StatelessWidget {
             child: RawMaterialButton(
               shape: const CircleBorder(),
               elevation: 0,
-              onPressed: () {},
+              onPressed: () {
+                _controller.selectedPageIndex.value = 4;
+              },
               child: const Icon(
                 size: 30,
                 Icons.search,
@@ -53,7 +55,8 @@ class LandingScreen extends StatelessWidget {
             ),
           ),
           floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
+          FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: bottomBar(context: context),
         ),
       ),
     );
@@ -90,63 +93,56 @@ class LandingScreen extends StatelessWidget {
 
   Widget bottomBar({required BuildContext context}) {
     return BottomAppBar(
-      shape: const CircularNotchedRectangle(),
+      height: 75,
+      surfaceTintColor: Colors.white,
+      elevation: 0,
       color: Colors.white,
-      child: SizedBox(
-        height: 40.0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                20.pw,
-                GestureDetector(
-                  onTap: () {
-                    _controller.selectedPageIndex.value = 0;
-                  },
-                  child: SvgPicture.asset(
-                    AssetsPath.HOME_BOTTOM_SHEET_LOGO,
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * .15,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _controller.selectedPageIndex.value = 1;
-                  },
-                  child: SvgPicture.asset(
-                    AssetsPath.MENU_BOTTOM_SHEET_LOGO,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    _controller.selectedPageIndex.value = 2;
-                  },
-                  child: SvgPicture.asset(
-                    AssetsPath.CART_BOTTOM_SHEET_LOGO,
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * .15,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _controller.selectedPageIndex.value = 3;
-                  },
-                  child: SvgPicture.asset(
-                    AssetsPath.PROFILE_BOTTOM_SHEET_LOGO,
-                  ),
-                ),
-                20.pw,
-              ],
-            ),
-          ],
-        ),
+      shape: const CircularNotchedRectangle(),
+      notchMargin: 3,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          IconButton(
+            icon: Obx(() => SvgPicture.asset(
+                  AssetsPath.HOME_BOTTOM_SHEET_LOGO,
+                  color: _controller.selectedPageIndex.value == 0
+                      ? const Color(0xFFFF679B)
+                      : const Color(0xFF6E7FAA),
+                )),
+            onPressed: () => _controller.selectedPageIndex.value = 0,
+          ),
+          IconButton(
+            icon: Obx(() => SvgPicture.asset(
+                  AssetsPath.MENU_BOTTOM_SHEET_LOGO,
+                  color: _controller.selectedPageIndex.value == 1
+                      ? const Color(0xFFFF679B)
+                      : const Color(0xFF6E7FAA),
+                )),
+            onPressed: () => _controller.selectedPageIndex.value = 1,
+          ),
+          SizedBox(
+            width: 40,
+          ),
+          IconButton(
+            icon: Obx(() => SvgPicture.asset(
+                  AssetsPath.CART_BOTTOM_SHEET_LOGO,
+                  color: _controller.selectedPageIndex.value == 2
+                      ? const Color(0xFFFF679B)
+                      : const Color(0xFF6E7FAA),
+                )),
+            onPressed: () => _controller.selectedPageIndex.value = 2,
+          ),
+          IconButton(
+            icon: Obx(() => SvgPicture.asset(
+                  AssetsPath.PROFILE_BOTTOM_SHEET_LOGO,
+                  color: _controller.selectedPageIndex.value == 3
+                      ? const Color(0xFFFF679B)
+                      : const Color(0xFF6E7FAA),
+                )),
+            onPressed: () => _controller.selectedPageIndex.value = 3,
+          ),
+        ],
       ),
     );
   }

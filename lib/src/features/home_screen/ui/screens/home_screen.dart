@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:smooth_star_rating_null_safety/smooth_star_rating_null_safety.dart';
 import 'package:wedevs_assignment/src/core/common_method/common_method.dart';
 import 'package:wedevs_assignment/src/core/extensions.dart';
 import 'package:wedevs_assignment/src/core/utilities/assets_path.dart';
@@ -15,7 +16,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return Container(
+      color: Colors.transparent,
       child: Scaffold(
         body: GetBuilder<HomeScreenController>(initState: (state) async {
           homePageController.readData();
@@ -78,6 +80,7 @@ class HomeScreen extends StatelessWidget {
               onTap: () {
                 showModalBottomSheet(
                   context: context,
+                  isScrollControlled: true,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(0.0),
@@ -304,131 +307,140 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget productList({required BuildContext context}) {
-    return Obx(() {
-      return Expanded(
-        child: GridView.count(
-          shrinkWrap: true,
-          // physics: NeverScrollableScrollPhysics(),
-          scrollDirection: Axis.vertical,
-          // Create a grid with 2 columns. If you change the scrollDirection to
-          // horizontal, this produces 2 rows.
-          crossAxisCount: 2,
-          crossAxisSpacing: 2,
-          childAspectRatio: MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height / 1.6),
-          mainAxisSpacing: 2,
-
-          // Generate 100 widgets that display their index in the List.
-          children: List.generate(homePageController.products.length, (index) {
-            return Card(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                    ),
-                    // Adjust the radius as needed
-                    child: Image.network(
-                      width: MediaQuery.of(context).size.width,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      },
-                      homePageController.products[index].images![0].src!
-                          .replaceAll("\\", ""),
-                      errorBuilder: (context, error, stackTrace) {
-                        return Image.asset(AssetsPath.NO_IMAGE_FOUND_ICON);
-                      },
-                    ),
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 6),
+        child: GetX<HomeScreenController>(builder: (controller) {
+          return GridView.builder(
+            itemCount: controller.products.length,
+            physics: const BouncingScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: (1 / 1.33),
+              crossAxisSpacing: 3,
+              mainAxisSpacing: 3,
+            ),
+            itemBuilder: (context, index) {
+              return Card(
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
                   ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        homePageController.products[index].name!,
-                        maxLines: 2,
-                        softWrap: true,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: Image.network(
+                            controller.products[index].images![0].src!,
+                            fit: BoxFit.fill,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Center(
+                                child: Image.asset(
+                                  AssetsPath.NO_IMAGE_FOUND_ICON,
+                                  fit: BoxFit.fill,
+                                ),
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                              "\$${homePageController.products[index].regularPrice!}",
-                              style:
-                              homePageController.products[index].salePrice != ""
-                                  ? const TextStyle(
-                                decoration: TextDecoration.lineThrough,
-                                color: Color(0xff989FA8),
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                              )
-                                  : const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                              )),
-                          8.pw,
-                          homePageController.products[index].salePrice != ""
-                              ? Text(
-                            "\$${homePageController.products[index].salePrice}",
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          )
-                              : Container(),
-                        ],
-                      ),
-                      const Row(
-                        children: [
-                          Icon(
-                            Icons.star,
-                            color: Color(0xffFF708A),
-                            size: 15,
-                          ),
-                          Icon(
-                            Icons.star,
-                            color: Color(0xffFF708A),
-                            size: 15,
-                          ),
-                          Icon(
-                            Icons.star,
-                            color: Color(0xffFF708A),
-                            size: 15,
-                          ),
-                          Icon(
-                            Icons.star,
-                            color: Color(0xffFF708A),
-                            size: 15,
-                          ),
-                          Icon(
-                            Icons.star,
-                            color: Color(0xffFF708A),
-                            size: 15,
-                          ),
-                        ],
-                      )
-                    ],
+                        Expanded(
+                            flex: 2,
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 5),
+                              padding: const EdgeInsets.fromLTRB(3, 1, 2, 1),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    controller.products[index].name!,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontFamily: "Roboto",
+                                        fontStyle: FontStyle.normal,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                  // Html(
+                                  //     data: controller.productLists[index].priceHtml!
+                                  // ),
+                                  const SizedBox(
+                                    height: 2,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                          homePageController.products[index]
+                                                      .regularPrice !=
+                                                  homePageController
+                                                      .products[index].price
+                                              ? "\$${homePageController.products[index].regularPrice!}"
+                                              : "",
+                                          style: homePageController
+                                                      .products[index]
+                                                      .regularPrice !=
+                                                  ""
+                                              ? const TextStyle(
+                                                  decoration: TextDecoration
+                                                      .lineThrough,
+                                                  color: Color(0xff989FA8),
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w400,
+                                                )
+                                              : const TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w700,
+                                                )),
+                                      8.pw,
+                                      Text(
+                                        textAlign: TextAlign.start,
+                                        homePageController
+                                                    .products[index].price !=
+                                                ""
+                                            ? "\$${homePageController.products[index].price}"
+                                            : "",
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Expanded(
+                                    child: SmoothStarRating(
+                                      allowHalfRating: false,
+                                      starCount: 5,
+                                      rating: controller
+                                          .products[index].ratingCount!
+                                          .toDouble(),
+                                      size: 20,
+                                      color: Colors.orange,
+                                      borderColor: Colors.grey,
+                                      spacing: 0.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
+                      ],
+                    ),
                   ),
-                )
-                ],
-              ),
-            );
-          }),
-        ),
-      );
-    });
+                ),
+              );
+            },
+          );
+        }),
+      ),
+    );
   }
 }

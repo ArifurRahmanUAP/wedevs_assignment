@@ -18,11 +18,13 @@ dependencies:
   equatable:
   get_it:
   rxdart:
+  flutter_html:
   dio:
   shared_preferences:
   flutter_svg:
   intl:
   dartz:
+  smooth_star_rating_null_safety:
   flutter_localizations:
     sdk: flutter
   # The following adds the Cupertino Icons font to your application.

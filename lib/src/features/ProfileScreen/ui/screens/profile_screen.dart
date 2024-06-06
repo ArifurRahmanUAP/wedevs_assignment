@@ -107,7 +107,7 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       Theme(
                         data: Theme.of(context)
-                            .copyWith(dividerColor: Colors.transparent),
+                            .copyWith(dividerColor: Colors.white),
                         child: Column(
                           children: [
                             expandedWidgets(
@@ -116,17 +116,32 @@ class ProfileScreen extends StatelessWidget {
                               icon: AssetsPath.PROFILE_BOTTOM_SHEET_LOGO,
                               isEnable: true,
                             ),
+                            Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 20),
+                              height: 2,
+                              color: const Color(0xffe1e4eb),
+                            ),
                             expandedWidgets(
                               children: Container(),
                               title: "Passwords",
                               icon: AssetsPath.PASSWORD_ICON,
                               isEnable: false,
                             ),
+                            Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 20),
+                              height: 2,
+                              color: const Color(0xffe1e4eb),
+                            ),
                             expandedWidgets(
                               children: Container(),
                               title: "Notification",
                               icon: AssetsPath.NOTIFICATION_ICON,
                               isEnable: false,
+                            ),
+                            Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 20),
+                              height: 2,
+                              color: const Color(0xffe1e4eb),
                             ),
                             expandedWidgets(
                               children: Container(),
@@ -223,7 +238,7 @@ class ProfileScreen extends StatelessWidget {
             // ),
           ),
           trailing: const Icon(
-            Icons.arrow_forward_ios,
+            Icons.keyboard_arrow_down_sharp,
             size: 17,
             color: Color(0xff899AA2),
           ),
@@ -243,11 +258,6 @@ class ProfileScreen extends StatelessWidget {
           ),
           expandedCrossAxisAlignment: CrossAxisAlignment.start,
           children: [children],
-        ),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          height: 2,
-          color: const Color(0xffe1e4eb),
         ),
       ],
     );
