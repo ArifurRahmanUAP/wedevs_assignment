@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:wedevs_assignment/src/core/features/landing_screen/ui/screens/landing_screen.dart';
 import 'package:wedevs_assignment/src/core/routes/route_name.dart';
-import '../../features/login_screens/ui/screens/login_screen.dart';
-import '../../features/signup_screens/ui/screens/signup_screen.dart';
-import '../splashscreen/splash_screen.dart';
+import 'package:wedevs_assignment/src/features/home_screen/ui/screens/home_screen.dart';
+import '../../features/login_screen/ui/screens/login_screen.dart';
+import '../../features/signup_screen/ui/screens/signup_screen.dart';
+import '../features/splashscreen/splash_screen.dart';
 
 class RouteGenerator {
   static pushNamed(BuildContext context, String pageName, {dynamic arguments}) {
@@ -48,11 +50,17 @@ class RouteGenerator {
           builder: (context) => const Splashscreen(),
         );
 
-      // case Routes.mainScreenRouteName:
-      //   return MaterialPageRoute(
-      //     builder: (context) =>
-      //         const MyHomePage(title: 'Flutter Demo Home Page'),
-      //   );
+      case Routes.landingPage:
+        return MaterialPageRoute(
+          builder: (context) =>
+              LandingScreen(),
+        );
+
+      case Routes.homeScreen:
+        return MaterialPageRoute(
+          builder: (context) =>
+               HomeScreen(),
+        );
 
       case Routes.loginScreenRouteName:
         return MaterialPageRoute(

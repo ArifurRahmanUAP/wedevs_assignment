@@ -12,22 +12,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core:
-  firebase_crashlytics:
-  firebase_analytics:
-  firebase_performance:
-  firebase_messaging:
   get:
   build_runner:
+  dotted_border:
   equatable:
   get_it:
   rxdart:
   dio:
+  cached_network_image:
   shared_preferences:
   flutter_svg:
-  connectivity_plus:
   intl:
   dartz:
+  fluttertoast:
+  image_picker: ^0.8.4+4
+  smooth_star_rating_null_safety:
   flutter_localizations:
     sdk: flutter
   # The following adds the Cupertino Icons font to your application.
@@ -47,6 +46,7 @@ flutter:
 
   assets:
     - assets/
+    - assets/image_not_found.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

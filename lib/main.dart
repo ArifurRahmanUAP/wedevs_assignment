@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wedevs_assignment/src/core/di/app_component.dart';
+import 'package:wedevs_assignment/src/core/features/splashscreen/splash_screen.dart';
 import 'package:wedevs_assignment/src/core/routes/router.dart';
 import 'package:wedevs_assignment/src/core/session/session_manager.dart';
-import 'package:wedevs_assignment/src/core/splashscreen/splash_screen.dart';
 
 final session = locator<SessionManager>();
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -23,6 +23,10 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'wedevs_assignment',
+      theme: ThemeData(
+        useMaterial3: true,
+        canvasColor: Colors.white,
+      ),
       onGenerateRoute: RouteGenerator.onRouteGenerate,
       home: const Splashscreen(),
     );

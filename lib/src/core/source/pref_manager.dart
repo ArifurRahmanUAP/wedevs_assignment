@@ -41,10 +41,6 @@ class PrefManager {
     return value;
   }
 
-  Future<bool> removeKey(String key) async {
-    return await _sharedPrefs.remove(key);
-  }
-
   Future<bool> logOut() async {
     bool response = false;
     await _sharedPrefs.clear().whenComplete(() {
