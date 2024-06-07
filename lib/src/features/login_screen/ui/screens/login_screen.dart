@@ -87,9 +87,6 @@ class LoginScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: TextFormField(
           controller: loginScreenController.userEmailController,
-          onChanged: (value) {
-            _formKey.currentState!.validate();
-          },
           validator: (value) {
             if (value!.isEmpty) {
               return "Email can't be empty.";
@@ -126,9 +123,6 @@ class LoginScreen extends StatelessWidget {
         child: TextFormField(
           controller: loginScreenController.passwordController,
           obscureText: !loginScreenController.isPasswordVisible.value,
-          onChanged: (value) {
-            _formKey.currentState!.validate();
-          },
           validator: (value) {
             if (value!.isEmpty) {
               return "Password can't be empty.";

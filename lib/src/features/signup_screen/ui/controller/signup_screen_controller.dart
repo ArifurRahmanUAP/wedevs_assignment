@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:wedevs_assignment/src/features/signup_screen/domain/repositories/signup_repositories.dart';
-
 import '../../../../core/di/app_component.dart';
 import '../../../../core/utilities/constants.dart';
 import '../../data/model/signup_model.dart';
@@ -37,18 +35,9 @@ class SignupScreenController extends GetxController {
   }
 
   void pickImage({required context}) async {
-    FocusScope.of(context).requestFocus(FocusNode());
-    Map<Permission, PermissionStatus> statues =
-        await [Permission.photos].request();
-    PermissionStatus? statusPhotos = statues[Permission.photos];
-    bool isGranted = statusPhotos == PermissionStatus.granted;
-    logger.e(isGranted);
-    if (isGranted) {
-      // Pick an image
-      final XFile? pickedImage =
-          await _picker.pickImage(source: ImageSource.gallery);
-      imgFile.value = pickedImage!;
-    }
+    final XFile? pickedImage =
+    await _picker.pickImage(source: ImageSource.gallery);
+    imgFile.value = pickedImage!;
   }
 
   void signUpButtonPressed() async {

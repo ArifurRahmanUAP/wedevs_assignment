@@ -108,9 +108,6 @@ class SignUpScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: TextFormField(
           controller: signupScreenController.userFullNameController,
-          onChanged: (value) {
-            _formKey.currentState!.validate();
-          },
           validator: (value) {
             if (value!.isEmpty) {
               return "Name can't be empty.";
@@ -146,9 +143,6 @@ class SignUpScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: TextFormField(
           controller: signupScreenController.userEmailController,
-          onChanged: (value) {
-            _formKey.currentState!.validate();
-          },
           validator: (value) {
             if (value!.isEmpty) {
               return "Email can't be empty.";
@@ -185,9 +179,6 @@ class SignUpScreen extends StatelessWidget {
         child: TextFormField(
           controller: signupScreenController.passwordController,
           obscureText: !signupScreenController.isPasswordVisible.value,
-          onChanged: (value) {
-            _formKey.currentState!.validate();
-          },
           validator: (value) {
             if (value!.isEmpty) {
               return "Password can't be empty.";
@@ -237,15 +228,12 @@ class SignUpScreen extends StatelessWidget {
         child: TextFormField(
           controller: signupScreenController.confirmPasswordController,
           obscureText: !signupScreenController.isConfirmPasswordVisible.value,
-          onChanged: (value) {
-            _formKey.currentState!.validate();
-          },
           validator: (value) {
             if (value!.isEmpty) {
               return "Confirm Password can't be empty.";
             } else if (value !=
                 signupScreenController.passwordController.value.text) {
-              return "Confirm Password doesn't Match";
+              return "Both Password doesn't Match";
             }
             return null;
           },
@@ -342,25 +330,30 @@ class SignUpScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Stack(
         children: [
-          SizedBox(
-            height: 120,
-            width: 120,
-            child: Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: Center(
-                child: (signupScreenController.imgFile.value.path.isEmpty)
-                    ? SvgPicture.asset(AssetsPath.PROFILE_BOTTOM_SHEET_LOGO)
+          Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: ClipOval(
+              child: SizedBox.fromSize(
+                size: const Size.fromRadius(65), // Image radius
+                child: signupScreenController.imgFile.value.path.isEmpty
+                    ? Container(
+                  padding: const EdgeInsets.all(20),
+                        child: SvgPicture.asset(
+                            AssetsPath.PROFILE_BOTTOM_SHEET_LOGO),
+                      )
                     : Image.file(
-                        File(signupScreenController.imgFile.value.path)),
+                        File(signupScreenController.imgFile.value.path),
+                        fit: BoxFit.fill,
+                      ),
               ),
             ),
           ),
           Positioned(
-            bottom: 0,
-            right: 0,
+            bottom: 5,
+            right: 5,
             child: GestureDetector(
               onTap: () {
                 signupScreenController.pickImage(context: context);

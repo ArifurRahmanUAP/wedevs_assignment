@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:wedevs_assignment/src/core/utilities/assets_path.dart';
 
 import '../../../../main.dart';
 import '../../routes/route_name.dart';
@@ -30,10 +31,17 @@ class _SplashscreenState extends State<Splashscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        children: <Widget>[],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: Container(
+          color: Colors.white,
+          child: Center(
+            child: SvgPicture.asset(
+              AssetsPath.LOGIN_LOGO,
+            ),
+          ),
+        ),
       ),
     );
   }

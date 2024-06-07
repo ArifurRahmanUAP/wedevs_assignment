@@ -18,15 +18,14 @@ dependencies:
   equatable:
   get_it:
   rxdart:
-  flutter_html:
   dio:
+  cached_network_image:
   shared_preferences:
   flutter_svg:
   intl:
   dartz:
   fluttertoast:
   image_picker: ^0.8.4+4
-  permission_handler: ^10.2.0
   smooth_star_rating_null_safety:
   flutter_localizations:
     sdk: flutter
