@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wedevs_assignment/main.dart';
 import 'package:wedevs_assignment/src/core/extensions.dart';
+import 'package:wedevs_assignment/src/core/features/landing_screen/ui/controller/landing_screen_controller.dart';
 import 'package:wedevs_assignment/src/core/routes/router.dart';
 import 'package:wedevs_assignment/src/core/utilities/assets_path.dart';
 import 'package:wedevs_assignment/src/features/home_screen/ui/controller/home_screen_controller.dart';
@@ -109,27 +110,27 @@ class ProfileScreen extends StatelessWidget {
                               fontWeight: FontWeight.normal),
                         )),
                     5.ph,
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     session.logout().then((value) {
-                    //       Get.delete<HomeScreenController>();
-                    //       Get.delete<ProfileScreenController>();
-                    //       Get.delete<HomeScreenController>();
-                    //       Get.delete<SignupScreenController>();
-                    //       Get.delete<LoginController>();
-                    //       return RouteGenerator.pushNamedAndRemoveAll(
-                    //           context, Routes.splashScreenRouteName);
-                    //     });
-                    //   },
-                    //   child: const Text(
-                    //     "Log Out",
-                    //     style: TextStyle(
-                    //         color: Colors.orange,
-                    //         fontSize: 16,
-                    //         fontStyle: FontStyle.normal,
-                    //         fontWeight: FontWeight.bold),
-                    //   ),
-                    // ),
+                    GestureDetector(
+                      onTap: () {
+                        session.logout().then((value) {
+                          Get.delete<HomeScreenController>();
+                          Get.delete<ProfileScreenController>();
+                          Get.delete<LandingScreenController>();
+                          Get.delete<SignupScreenController>();
+                          Get.delete<LoginController>();
+                          return RouteGenerator.pushNamedAndRemoveAll(
+                              context, Routes.splashScreenRouteName);
+                        });
+                      },
+                      child: const Text(
+                        "Log Out",
+                        style: TextStyle(
+                            color: Colors.orange,
+                            fontSize: 16,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
                     25.ph,
                     Card(
                       color: Colors.white,
