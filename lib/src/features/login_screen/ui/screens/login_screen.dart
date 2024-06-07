@@ -77,6 +77,10 @@ class LoginScreen extends StatelessWidget {
     return Material(
       elevation: 2,
       shape: RoundedRectangleBorder(
+        side: const BorderSide(
+          width: 1,
+          color: Color(0xffe4e6e8),
+        ),
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Container(
@@ -112,6 +116,10 @@ class LoginScreen extends StatelessWidget {
     return Material(
       elevation: 2,
       shape: RoundedRectangleBorder(
+        side: const BorderSide(
+          width: 1,
+          color: Color(0xffe4e6e8),
+        ),
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Container(
@@ -135,6 +143,7 @@ class LoginScreen extends StatelessWidget {
               Icons.lock_outline,
               color: Color(0xffA4A9AF),
             ),
+
             suffixIcon: IconButton(
               onPressed: () =>
                   loginScreenController.loginPasswordVisibilityButtonPressed(),

@@ -109,27 +109,27 @@ class ProfileScreen extends StatelessWidget {
                               fontWeight: FontWeight.normal),
                         )),
                     5.ph,
-                    GestureDetector(
-                      onTap: () {
-                        session.logout().then((value) {
-                          Get.delete<HomeScreenController>();
-                          Get.delete<ProfileScreenController>();
-                          Get.delete<HomeScreenController>();
-                          Get.delete<SignupScreenController>();
-                          Get.delete<LoginController>();
-                          return RouteGenerator.pushNamedAndRemoveAll(
-                              context, Routes.splashScreenRouteName);
-                        });
-                      },
-                      child: const Text(
-                        "Log Out",
-                        style: TextStyle(
-                            color: Colors.orange,
-                            fontSize: 16,
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     session.logout().then((value) {
+                    //       Get.delete<HomeScreenController>();
+                    //       Get.delete<ProfileScreenController>();
+                    //       Get.delete<HomeScreenController>();
+                    //       Get.delete<SignupScreenController>();
+                    //       Get.delete<LoginController>();
+                    //       return RouteGenerator.pushNamedAndRemoveAll(
+                    //           context, Routes.splashScreenRouteName);
+                    //     });
+                    //   },
+                    //   child: const Text(
+                    //     "Log Out",
+                    //     style: TextStyle(
+                    //         color: Colors.orange,
+                    //         fontSize: 16,
+                    //         fontStyle: FontStyle.normal,
+                    //         fontWeight: FontWeight.bold),
+                    //   ),
+                    // ),
                     25.ph,
                     Card(
                       color: Colors.white,
