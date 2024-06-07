@@ -6,6 +6,7 @@ import 'package:wedevs_assignment/src/core/common_method/common_method.dart';
 import 'package:wedevs_assignment/src/core/extensions.dart';
 import 'package:wedevs_assignment/src/core/utilities/assets_path.dart';
 
+import '../../../../core/routes/router.dart';
 import '../controller/home_screen_controller.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -20,11 +21,15 @@ class HomeScreen extends StatelessWidget {
       bottom: false,
       child: Scaffold(
         body: GetBuilder<HomeScreenController>(initState: (state) async {
-          homePageController.readData();
+          if (homePageController.products.isEmpty) {
+            homePageController.readData();
+          }
         }, builder: (logic) {
           return Container(
-            margin: const EdgeInsets.symmetric(
-              horizontal: 15,
+            margin: const EdgeInsets.only(
+              left: 15,
+              right: 15,
+              bottom: 35,
             ),
             child: Column(
               children: [
@@ -252,8 +257,15 @@ class HomeScreen extends StatelessWidget {
                                       isLoading: Rx<bool>(false),
                                       leftButtonTitle: "Cancel",
                                       rightButtonTitle: "Apply",
-                                      leftButtonCallBack: () {},
-                                      rightButtonCallBack: () {},
+                                      leftButtonCallBack: () {
+                                        RouteGenerator.pop(context);
+                                      },
+                                      rightButtonCallBack: () {
+                                        homePageController
+                                            .searchFilterClickAction()
+                                            .then((value) =>
+                                                RouteGenerator.pop(context));
+                                      },
                                     ),
                                   ],
                                 );
@@ -309,7 +321,8 @@ class HomeScreen extends StatelessWidget {
 
   Widget productList({required BuildContext context}) {
     return Expanded(
-      child: Padding(
+      child: Container(
+        margin: const EdgeInsets.only(top: 15),
         padding: const EdgeInsets.symmetric(horizontal: 6),
         child: GetX<HomeScreenController>(builder: (controller) {
           return GridView.builder(
@@ -421,9 +434,8 @@ class HomeScreen extends StatelessWidget {
                                     child: SmoothStarRating(
                                       allowHalfRating: false,
                                       starCount: 5,
-                                      rating: controller
-                                          .products[index].ratingCount!
-                                          .toDouble(),
+                                      rating: double.parse(controller
+                                          .products[index].averageRating!),
                                       size: 20,
                                       color: Colors.orange,
                                       borderColor: Colors.grey,

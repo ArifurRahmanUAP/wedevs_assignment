@@ -93,7 +93,7 @@ class LandingScreen extends StatelessWidget {
 
   Widget bottomBar({required BuildContext context}) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(15.0),
         ),
